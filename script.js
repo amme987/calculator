@@ -27,3 +27,12 @@ function operate(num1, num2, operator) {
     divide(num1, num2);
   }
 }
+
+const display = document.querySelector(".display");
+const numbers = document.querySelectorAll(".number");
+let displayValues;
+numbers.forEach(number => {
+  number.addEventListener("click", () => {
+    displayValues = display.textContent += `${number.getAttribute("id")}`;
+  });
+});
