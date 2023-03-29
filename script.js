@@ -49,20 +49,32 @@ buttons.forEach(button => {
         // both operands
       } else {
         num2 = num;
-        display.textContent = num1 = operate(num1, num2, operator);
+        // Divide by 0
+        if (operate(num1, num2, operator) == "Infinity") {
+          display.textContent = "no";
+          num1 = "";
+        } else {
+          display.textContent = num1 = operate(num1, num2, operator);
+        }
         num2 = "";
       }
       operator = button.getAttribute("id");
       num = "";
     } else if (button.getAttribute("id") === "=") {
       if (!num) {
-        return (num = "");
+        num = "";
+      } else {
+        num2 = num;
+        // Divide by 0
+        if (operate(num1, num2, operator) == "Infinity") {
+          display.textContent = "no";
+        } else {
+          display.textContent = num = operate(num1, num2, operator);
+        }
+        num1 = "";
+        num2 = "";
       }
-      num2 = num;
-      display.textContent = num = operate(num1, num2, operator);
-      num1 = "";
-      num2 = "";
-    } else if (button.getAttribute("id") === "clear") {
+    } else {
       location.reload();
     }
   });
