@@ -40,10 +40,13 @@ buttons.forEach(button => {
       num += button.getAttribute("id");
       display.textContent = num;
     } else if (button.getAttribute("class") === "operator") {
+      // operator is input first
       if (!num) {
         num1 = "0";
+        // one operand
       } else if (!num1) {
         num1 = num;
+        // both operands
       } else {
         num2 = num;
         display.textContent = num1 = operate(num1, num2, operator);
@@ -52,6 +55,9 @@ buttons.forEach(button => {
       operator = button.getAttribute("id");
       num = "";
     } else if (button.getAttribute("id") === "=") {
+      if (!num) {
+        return (num = "");
+      }
       num2 = num;
       display.textContent = num = operate(num1, num2, operator);
       num1 = "";
