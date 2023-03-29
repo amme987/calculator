@@ -40,13 +40,12 @@ buttons.forEach(button => {
       num += button.getAttribute("id");
       display.textContent = num;
     } else if (button.getAttribute("class") === "operator") {
-      if (!num1) {
+      if (!num) {
+        num1 = "0";
+      } else if (!num1) {
         num1 = num;
-      } else if (!num2) {
-        num2 = num;
-        display.textContent = num1 = operate(num1, num2, operator);
-        num2 = "";
       } else {
+        num2 = num;
         display.textContent = num1 = operate(num1, num2, operator);
         num2 = "";
       }
