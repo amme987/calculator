@@ -33,7 +33,6 @@ const buttons = document.querySelectorAll("button");
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 let num = "";
-let sum;
 
 buttons.forEach(button => {
   button.addEventListener("click", () => {
@@ -41,15 +40,25 @@ buttons.forEach(button => {
       num += button.getAttribute("id");
       display.textContent = num;
     } else if (button.getAttribute("class") === "operator") {
-      operator = button.getAttribute("id");
       if (!num1) {
         num1 = num;
+      } else if (!num2) {
+        num2 = num;
+        display.textContent = num1 = operate(num1, num2, operator);
+        num2 = "";
+      } else {
+        display.textContent = num1 = operate(num1, num2, operator);
+        num2 = "";
       }
+      operator = button.getAttribute("id");
       num = "";
     } else if (button.getAttribute("id") === "=") {
       num2 = num;
-      display.textContent = sum = operate(num1, num2, operator);
-      num1 = sum;
+      display.textContent = num = operate(num1, num2, operator);
+      num1 = "";
+      num2 = "";
+    } else if (button.getAttribute("id") === "clear") {
+      location.reload();
     }
   });
 });
