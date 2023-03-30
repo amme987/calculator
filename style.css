@@ -1,10 +1,25 @@
 .calculator {
+  border: solid black;
+  width: fit-content;
+  margin: auto;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.container {
   display: grid;
-  grid-template-columns: repeat(4, 100px);
-  grid-template-rows: repeat(5, 100px);
+  grid-template-columns: repeat(4, 70px);
+  grid-template-rows: repeat(6, 70px);
+  gap: 10px;
 }
 
 .display {
   grid-column: 1 / 5;
   border: solid black;
+  margin-bottom: 10px;
+}
+
+.clear,
+.backspace {
+  grid-column: span 2;
 }

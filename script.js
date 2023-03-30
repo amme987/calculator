@@ -30,8 +30,6 @@ function operate(num1, num2, operator) {
 
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button");
-const numbers = document.querySelectorAll(".number");
-const operators = document.querySelectorAll(".operator");
 let num = "";
 
 buttons.forEach(button => {
