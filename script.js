@@ -78,6 +78,8 @@ buttons.forEach(button => {
         num1 = "";
         num2 = "";
       }
+    } else if (button.getAttribute("class") === "backspace") {
+      display.textContent = num = display.textContent.slice(0, -1);
     } else {
       location.reload();
     }
