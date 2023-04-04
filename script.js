@@ -35,16 +35,22 @@ let num = "";
 buttons.forEach(button => {
   button.addEventListener("click", () => {
     if (button.getAttribute("class") === "number") {
+      if (
+        button.getAttribute("id") === "." &&
+        display.textContent.includes(".")
+      ) {
+        return;
+      }
       num += button.getAttribute("id");
       display.textContent = num;
     } else if (button.getAttribute("class") === "operator") {
-      // operator is input first
+      // Operator is input first
       if (!num) {
         num1 = "0";
-        // one operand
+        // One operand
       } else if (!num1) {
         num1 = num;
-        // both operands
+        // Both operands
       } else {
         num2 = num;
         // Divide by 0
@@ -77,3 +83,5 @@ buttons.forEach(button => {
     }
   });
 });
+
+// TODO: Round numbers with long decimals
