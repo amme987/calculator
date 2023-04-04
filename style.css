@@ -16,11 +16,19 @@
 .display {
   grid-column: 1 / 5;
   display: flex;
-  align-items: center;
-  padding: 10px;
+  flex-direction: column;
+  padding: 5px 10px;
   border: solid black;
-  margin-bottom: 10px;
   font-family: monospace;
+}
+
+.calculations,
+.answer {
+  text-align: end;
+  flex: 1;
+}
+
+.answer {
   font-size: 30px;
 }
 

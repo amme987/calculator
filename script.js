@@ -28,57 +28,58 @@ function operate(num1, num2, operator) {
   }
 }
 
-const display = document.querySelector(".display");
+const calculations = document.querySelector(".calculations");
+const answer = document.querySelector(".answer");
 const buttons = document.querySelectorAll("button");
-let num = "";
+let sum,
+  num = "";
+
+// window.addEventListener("keydown", e => console.log(e));
 
 buttons.forEach(button => {
   button.addEventListener("click", () => {
-    if (button.getAttribute("class") === "number") {
-      if (
-        button.getAttribute("id") === "." &&
-        display.textContent.includes(".")
-      ) {
+    if (button.className === "number") {
+      if (button.id === "." && answer.textContent.includes(".")) {
         return;
       }
-      num += button.getAttribute("id");
-      display.textContent = num;
-    } else if (button.getAttribute("class") === "operator") {
+      num += button.id;
+      answer.textContent = num;
+    } else if (button.className === "operator") {
       // Operator is input first
       if (!num) {
         num1 = "0";
         // One operand
-      } else if (!num1) {
+      } else if (!num1 && num1 !== 0) {
         num1 = num;
-        // Both operands
       } else {
-        num2 = num;
         // Divide by 0
-        if (operate(num1, num2, operator) == "Infinity") {
-          display.textContent = "no";
-          num1 = "";
+        if (num == 0 && operator === "/") {
+          answer.textContent = "no";
+          (num = ""), (num1 = ""), (operator = "");
+          calculations.textContent = "";
+          return;
+        } else if (button.id === "=") {
+          calculations.textContent = `${num1} ${operator} ${num} =`;
+          sum = operate(num1, num, operator);
+          if (sum.toString().length > 15) {
+            answer.textContent = sum.toString().substring(0, 15);
+          } else {
+            answer.textContent = sum;
+          }
+          return;
         } else {
-          display.textContent = num1 = operate(num1, num2, operator);
+          sum = operate(num1, num, operator);
+          if (sum.toString().length > 15) {
+            answer.textContent = num1 = sum.toString().substring(0, 15);
+          } else {
+            answer.textContent = num1 = sum;
+          }
         }
-        num2 = "";
       }
-      operator = button.getAttribute("id");
-      num = "";
-    } else if (button.getAttribute("id") === "=") {
-      if (!num) {
-        num = "";
-      } else {
-        num2 = num;
-        // Divide by 0
-        if (operate(num1, num2, operator) == "Infinity") {
-          display.textContent = "no";
-        } else {
-          display.textContent = num = operate(num1, num2, operator);
-        }
-        num1 = "";
-        num2 = "";
-      }
-    } else if (button.getAttribute("class") === "backspace") {
+      operator = button.id;
+      calculations.textContent = `${num1} ${operator}`;
+      (num = ""), (sum = "");
+    } else if (button.className === "backspace") {
       display.textContent = num = display.textContent.slice(0, -1);
     } else {
       location.reload();
@@ -86,4 +87,8 @@ buttons.forEach(button => {
   });
 });
 
-// TODO: Round numbers with long decimals
+// TODO: fix error when double clicking on operand
+
+// function calculate(value) {
+
+// }
