@@ -42,6 +42,9 @@ buttons.forEach(button => {
       if (button.id === "." && answer.textContent.includes(".")) {
         return;
       }
+      if (sum) {
+        (num = ""), (num1 = undefined);
+      }
       num += button.id;
       answer.textContent = num;
     } else if (button.className === "operator") {
@@ -49,13 +52,13 @@ buttons.forEach(button => {
       if (!num) {
         num1 = "0";
         // One operand
-      } else if (!num1 && num1 !== 0) {
+      } else if (!num1 && num1 != 0) {
         num1 = num;
       } else {
         // Divide by 0
         if (num == 0 && operator === "/") {
           answer.textContent = "no";
-          (num = ""), (num1 = ""), (operator = "");
+          (num = ""), (num1 = undefined), (operator = "");
           calculations.textContent = "";
           return;
         } else if (button.id === "=") {
@@ -66,7 +69,9 @@ buttons.forEach(button => {
           } else {
             answer.textContent = sum;
           }
+          //(num = ""), (sum = "");
           return;
+          // Two operands and operator is selected
         } else {
           sum = operate(num1, num, operator);
           if (sum.toString().length > 15) {
@@ -80,7 +85,11 @@ buttons.forEach(button => {
       calculations.textContent = `${num1} ${operator}`;
       (num = ""), (sum = "");
     } else if (button.className === "backspace") {
-      display.textContent = num = display.textContent.slice(0, -1);
+      if (num === "") {
+        return;
+      } else {
+        answer.textContent = num = answer.textContent.slice(0, -1);
+      }
     } else {
       location.reload();
     }
@@ -88,7 +97,6 @@ buttons.forEach(button => {
 });
 
 // TODO: fix error when double clicking on operand
-
 // function calculate(value) {
 
 // }
