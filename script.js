@@ -31,59 +31,60 @@ function operate(num1, num2, operator) {
 const calculations = document.querySelector(".calculations");
 const answer = document.querySelector(".answer");
 const buttons = document.querySelectorAll("button");
-let sum,
-  num = "";
-
-// window.addEventListener("keydown", e => console.log(e));
+let num = "";
 
 buttons.forEach(button => {
   button.addEventListener("click", () => {
     if (button.className === "number") {
-      if (button.id === "." && answer.textContent.includes(".")) {
-        return;
+      if (num2) {
+        num = "";
+        num1 = undefined;
+        num2 = undefined;
       }
-      if (sum) {
-        (num = ""), (num1 = undefined);
+      if (button.id === "." && num.includes(".")) {
+        return;
       }
       num += button.id;
       answer.textContent = num;
     } else if (button.className === "operator") {
       // Operator is input first
-      if (!num) {
+      if (!num && !num1) {
         num1 = "0";
         // One operand
-      } else if (!num1 && num1 != 0) {
+      } else if (num1 === undefined) {
         num1 = num;
       } else {
         // Divide by 0
-        if (num == 0 && operator === "/") {
+        if (num === "0" && operator === "/") {
           answer.textContent = "no";
-          (num = ""), (num1 = undefined), (operator = "");
+          num = "";
+          num1 = undefined;
+          operator = undefined;
           calculations.textContent = "";
           return;
         } else if (button.id === "=") {
           calculations.textContent = `${num1} ${operator} ${num} =`;
-          sum = operate(num1, num, operator);
-          if (sum.toString().length > 15) {
-            answer.textContent = sum.toString().substring(0, 15);
+          num2 = operate(num1, num, operator);
+          if (num2.toString().length > 15) {
+            answer.textContent = trimAnswer(num2);
           } else {
-            answer.textContent = sum;
+            answer.textContent = num2;
           }
-          //(num = ""), (sum = "");
           return;
           // Two operands and operator is selected
-        } else {
-          sum = operate(num1, num, operator);
-          if (sum.toString().length > 15) {
-            answer.textContent = num1 = sum.toString().substring(0, 15);
+        } else if (num && num1 && operator) {
+          num2 = operate(num1, num, operator);
+          if (num2.toString().length > 15) {
+            answer.textContent = num1 = trimAnswer(num2);
           } else {
-            answer.textContent = num1 = sum;
+            answer.textContent = num1 = num2;
           }
         }
       }
       operator = button.id;
       calculations.textContent = `${num1} ${operator}`;
-      (num = ""), (sum = "");
+      num = "";
+      num2 = undefined;
     } else if (button.className === "backspace") {
       if (num === "") {
         return;
@@ -96,7 +97,7 @@ buttons.forEach(button => {
   });
 });
 
-// TODO: fix error when double clicking on operand
-// function calculate(value) {
-
-// }
+// Trim all the 0s from the end of this floating point answer because coding is dumb and calculates decimals stupidlly
+function trimAnswer(num2) {
+  return num2.toString().substring(0, 15).replace(/0+$/, "").trimEnd();
+}
