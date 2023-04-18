@@ -1,9 +1,21 @@
+body {
+  height: 97vh;
+  display: flex;
+  align-items: center;
+  /* background-color: white; */
+}
+
 .calculator {
   border: solid black;
   width: fit-content;
   margin: auto;
   padding: 30px;
   border-radius: 10px;
+  background-color: #07d9f494;
+}
+
+.operator:not(#\=) {
+  background-color: #fb9bfd;
 }
 
 .container {
@@ -13,6 +25,17 @@
   gap: 10px;
 }
 
+button,
+.display {
+  border-radius: 3px;
+}
+
+button {
+  font-size: large;
+  border-width: 1.2px;
+  background-color: white;
+}
+
 .display {
   grid-column: 1 / 5;
   display: flex;
@@ -20,6 +43,7 @@
   padding: 5px 10px;
   border: solid black;
   font-family: monospace;
+  background-color: white;
 }
 
 .calculations,
@@ -35,4 +59,9 @@
 .clear,
 .backspace {
   grid-column: span 2;
+  background-color: #ff97ba;
+}
+
+.backspace {
+  font-size: xx-large;
 }
